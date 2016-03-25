@@ -1,0 +1,172 @@
+<div ng-controller="StudentCtrl">
+
+
+    <div class="btn btn-group pull-left" content-for="subMenu">
+        <a href="#/login" ng-hide="studentMode">Directors</a>
+        <button class="btn btn-navbar ng-scope" ng-show="studentMode" ng-click="resetStudentMode()">Logout</button>
+    </div>
+
+    <li content-for="roles"><a href="#/groups">Groups</a>
+    </li>
+    <!-- <div overlay="Orecordings">
+
+    <div class="scrollable dark">
+        <div class="scrollable-content">
+
+            <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55147768&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+            <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55220990&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+        </div>
+    </div>
+
+</div>- -->
+
+    <div content-for="studentName" >
+        {{session.studentName+" "+session.thisGroup+" "+session.studentInst}}
+
+    </div>
+
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div ng-hide="studentMode" bs-panel title="Student Area Login">
+                <form id="studentLoginForm" name="studentLoginForm">
+                    <!--             <input required bs-form-control type="text" ng-model="group" label="Group Code" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10" /> -->
+                    
+<!--                     <select required id="groupSelection" name="groupSelection" bs-form-control style="width:40%;" ng-model="selectedGroup" label="Group" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10"> -->
+                        <!--                     <option ng-repeat="(key,val) in groupListFire" value="{{key}}">{{key}}</option> -->
+<!--                         <option>KMS Beginner</option>
+                        <option>KMS Beginner Percussion</option>
+                        <option>KMS Concert &amp; Symphonic</option>
+                        <option>KMS Concert &amp; Symphonic Percussion</option>
+                        <option>KMS Wind Ensemble</option>
+                        <option>KMS Wind Ensemble Percussion</option>
+
+                    </select> -->
+<!--                     <select required id="groupSelection" name="groupSelection" ng-options="option for option in groupOptions" bs-form-control style="width:40%;"  ng-model="selectedGroup"  label="Group" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10"> -->
+<!--                 </select> -->
+                    
+                    <input type="radio" ng-model="selectedGroup" ng-required="!selectedGroup" value="KMS Beginner"/>KMS Beginner <br/> 
+                    <input type="radio" ng-model="selectedGroup" ng-required="!selectedGroup" value="KMS Beginner Percussion"/>KMS Beginner Percussion<br/>
+                    <input type="radio" ng-model="selectedGroup" ng-required="!selectedGroup" value="KMS Concert & Symphonic"/>KMS Concert &amp; Symphonic<br/>
+                    <input type="radio" ng-model="selectedGroup" ng-required="!selectedGroup" value="KMS Concert & Symphonic Percussion"/>KMS Concert &amp; Symphonic Percussion <br/>
+                    <input type="radio" ng-model="selectedGroup" ng-required="!selectedGroup" value="KMS Wind Ensemble"/>KMS Wind Ensemble <br/>
+                    <input type="radio" ng-model="selectedGroup" ng-required="!selectedGroup" value="KMS Wind Ensemble Percussion"/>KMS Wind Ensemble Percussion                    
+                    
+                    <input id="studentIdInput" style="width:40%;" name="studentIdInput" required bs-form-control type="password" ng-model="passw" label="Password" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10" />
+                    <button ng-disabled="studentLoginForm.$error.required" class="btn btn-success" ng-click="setStudentMode(selectedGroup, passw)" ng-hide="studentMode">Login</button>
+                    <p>{{loginError}}</p>
+                </form>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-12 col-lg-12" ng-show="studentMode" ng-controller="WeeksCtrl">
+
+                <div bs-panel title="Practice Log" class="week">
+
+                    <div>
+                        <div class="btn-group" ng-hide="addSession">
+                            <button class="btn btn-sm btn-default" ng-click="subWeek()"><i class="fa fa-arrow-left blue"></i>
+                            </button>
+                            <button class="btn btn-sm btn-default" ng-click="thisWeek()">Now</button>
+                            <button class="btn btn-sm btn-default" ng-click="addWeek()"><i class="fa fa-arrow-right blue"></i>
+                            </button>
+                        </div>
+
+
+                        <div class="container">
+                            <div class="row" ng-hide="addSession">
+                                <h2>{{month+" "+year}}<span class="weekNumber"> Week {{weekNumber}}</span></h2>
+
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(monForm, month, 'Mon', mon, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Mon, "+mon}}
+
+                                    </h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="monForm == item.date" class="fa fa-check green fa-2x "></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(tueForm, month, 'Tue', tue, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Tue, "+tue}}</h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="tueForm == item.date" class="fa fa-check green fa-2x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(wedForm, month, 'Wed', wed, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Wed, "+wed}}</h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="wedForm == item.date" class="fa fa-check green fa-2x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(thuForm, month, 'Thu', thu, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Thu, "+thu}}</h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="thuForm == item.date" class="fa fa-check green fa-2x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(friForm, month, 'Fri', fri, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Fri, "+fri}}</h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="friForm == item.date" class="fa fa-check green fa-2x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(satForm, month, 'Sat', sat, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Sat, "+sat}}</h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="satForm == item.date" class="fa fa-check green fa-2x"></i>
+                                </div>
+                                <div class="weekCols">
+                                    <button class="btn btn-success btn-xs" ng-click="newSession(sunForm, month, 'Sun', sun, year)"><i class="fa fa-plus "></i>
+                                    </button>
+                                    <h3>{{"Sun, "+sun}}</h3>
+
+                                    <i ng-repeat="item in sessions" ng-show="sunForm == item.date" class="fa fa-check green fa-2x"></i>
+
+                                </div>
+
+
+                            </div>
+                            <div class="row alert alert-success" ng-show="addSession">
+                                <h4>{{prettyDate}}</h4>
+                                
+                                <form name="practiceForm" novalidate>
+                                    <input required bs-form-control type="text" placeholder="List what you practiced" ng-model="session.practiced" label="Music Practiced" name="practiced" />
+                                    <textarea required placeholder="Write a few sentences about your practice time." type="text" ng-model="session.comments" label="Comments" bs-form-control name="comments"></textarea>
+
+                                    <button class="btn btn-default" ng-click="cancelSession()">Cancel</button>
+                                    <button class="btn btn-primary" ng-disabled="practiceForm.$error.required" ng-click="saveSession()">Save</button>
+
+                                </form>
+
+                                <span class="err">{{errmsg}}</span>
+                            </div>
+                            <h4 ng-hide="addSession">{{sessionCount+" sessions = "+percentage}}</h4>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</div>
+

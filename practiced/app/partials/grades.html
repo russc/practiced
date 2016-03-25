@@ -1,0 +1,56 @@
+<div ng-controller="StudentCtrl">
+
+
+    <div class="btn btn-group pull-left" content-for="subMenu">
+        <button class="btn btn-navbar ng-scope" ng-show="studentMode" ng-click="resetStudentMode()">Logout</button>
+    </div>
+
+    <li content-for="roles"><a href="#/groups">Groups</a>
+    </li>
+    <!-- <div overlay="Orecordings">
+
+    <div class="scrollable dark">
+        <div class="scrollable-content">
+
+            <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55147768&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+            <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55220990&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+        </div>
+    </div>
+
+</div>- -->
+
+    <div content-for="studentName">
+        {{session.studentName+" "+session.studentInst}}
+
+    </div>
+
+    <div class="scrollable">
+        <div class="scrollable-content">
+            
+            <div class="col-xs-12 col-sm-12 col-lg-">
+                <div bs-panel title="Group Assignments">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Due</th>
+                            <th>Grade</th>
+                        </tr>
+                        <tr ng-repeat="item in assigned" ng-hide="item.due < '2015-01-01'">
+                            <td>{{item.title}}</td>
+                            <td>{{item.type}}</td>
+                            <td dateformat date="{{item.due}}"></td>
+                            <td>{{myGrade[item.title][session.thisUser]}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+<div ng-repeat='item in assignList | orderBy:item.due'>
+    <p>{{item.title+" "+item.type+", "}}<span dateformat date="{{item.due}}"></span></p> 
+</div>

@@ -1,0 +1,17 @@
+<div class="scrollable" bs-panel title="Practice Comments">
+    <div >
+        <div class="scrollable-content">
+            <div ng-repeat="(key, val) in commentsPage">
+
+                <div ng-repeat="(k, v) in val">
+                    <h4>{{v.studentName}}</h4>
+                    <p>{{v.comments}}</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

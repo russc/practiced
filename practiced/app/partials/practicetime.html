@@ -1,0 +1,103 @@
+<div ng-controller="AssignmentCtrl">
+
+
+    <div content-for="topNavOption">
+        <div class="btn-group justified ">
+            <form class="navbar-form">
+                <select class="form-control" ng-options="option for option in listOfOptions" ng-model="selectedItem" ng-change="selectedItemChanged(1100)" style="width:70%;float:left; margin-left:5px;">
+                </select>
+
+            </form>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="scrollable">
+
+
+        <div ng-show="loading" class="spinner">
+            <img src="img/load.gif">
+        </div>
+
+        <div ng-hide="loading" class="scrollable-content">
+
+
+            <div class="col-xs-1 col-sm-1 col-lg-1">
+
+            </div>
+
+            <div bs-panel class="col-xs-9 col-sm-9 col-lg-9 ">
+                <div ng-controller="WeeksCtrl">
+                    <div>
+                        <div class="btn-group" ng-hide="addSession">
+                            <button class="btn btn-sm btn-default" ng-click="subWeek()"><i class="fa fa-arrow-left blue"></i>
+                            </button>
+                            <button class="btn btn-sm btn-default" ng-click="thisWeek()">Now</button>
+                            <button class="btn btn-sm btn-default" ng-click="addWeek()"><i class="fa fa-arrow-right blue"></i>
+                            </button>
+                  
+
+                        </div>
+
+
+                        <div class="container">
+                            <div class="row">
+                                <h5>{{"Week - "+weekNumber+" Mon, "+month+" "+mon+", "+year+" through Sun, "+month+" "+sun+", "+year}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped ">
+                        <tr>
+                            <th></th>
+                            <th style="width:35%;">Name</th>
+                            <th>Instrument</th>
+                            <th>Grade</th>
+
+
+                        </tr>
+                        <tr ng-repeat="value in studentList | orderByPriority | orderBy:'last'">
+                            <td><small>{{value.$id}}</small>
+                            </td>
+                            <!--                             <th><button class="btn btn-xs btn-default" ng-click="editStudentInfo()"><i class="fa fa-pencil"></i> -->
+                            <!--                             </button></th> -->
+                            <td style="vertical-align:middle;">
+                                <!--                                 <span ng-show="editStudentMode">
+                                    <input type="text" value="{{value.first}}">
+                                    <input type="text" value="{{value.last}}">  
+                                    <button class="btn btn-xs btn-default" ng-click="editStudentMode = false">
+                            </button>
+                                </span> -->
+                                <span>{{value.first.charAt(0)+"."+value.last.charAt(0)+"."}}</span>
+                            </td>
+
+                            <td style="vertical-align:middle;">{{value.instrument}}</td>
+                            <td style="width:100px;">
+                                <span style="text-align:left;" ng-hide="gradeMode">
+                            <img src="img/load.gif" width="18" height="18" ng-show="gradeLoader">
+                        </span> {{value.sessions[weekNumber]}}
+                            </td>
+
+
+
+
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-lg-1">
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,164 @@
+<div ng-controller="AssignmentCtrl">
+
+
+
+    <div overlay="myOverlay">
+        <h1 class="overlay-name">{{overFirst+" "+overLast}}</h1>
+        <h4 class="overlay-grade">{{overGrade}}</h4>
+        <p class="overlays" ng-show="overGrade < 100">You can retake this test and improve your grade by Friday.</p>
+        <p class="overlays" toggle="off" bubble target="myOverlay">
+            <span class="btn btn-default">Done</span>
+        </p>
+    </div>
+
+    <div content-for="topNavOption">
+        <div class="btn-group justified ">
+            <form class="navbar-form">
+                <select class="form-control" ng-options="option for option in listOfOptions" ng-model="selectedItem" ng-change="selectedItemChanged(1100)" style="width:70%;float:left; margin-left:5px;">
+                </select>
+
+            </form>
+            <form class="navbar-form">
+                <!--                 <select ng-model="blisterPackTemplateSelected" ng-change="changedValue(blisterPackTemplateSelected)" 
+                        ng-options="blisterPackTemplate as blisterPackTemplate.name for blisterPackTemplate in blisterPackTemplates">
+                    <option value="">Select Account</option>
+                </select> -->
+
+                <select class="form-control" ng-options="assignment as assignment.title for (key, assignment) in assignmentList" ng-model="selectedAssignment" ng-change="selectAssignment(selectedAssignment)" style="width:70%;float:left; margin-left:5px;">
+                    <option value="">Select Assignment</option>
+                </select>
+
+
+                <!--                 <select id="tests" ng-model="tests" class="form-control" ng-change="changedValue(this)" style="width:70%;float:left; margin-left:5px;">
+                    <option value="">Select Assignment</option>
+                    <option ng-repeat="(key,item) in assignmentList" value="{{key}}">{{item.title}}</option>
+                </select> -->
+
+
+            </form>
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="scrollable">
+
+        <div ng-show="loading" class="spinner">
+            <img src="img/load.gif">
+        </div>
+
+        <div ng-hide="loading" class="scrollable-content">
+
+            <!--             <div bs-panel class="col-xs-4 col-sm-4 col-lg-4 " title="Assignments ">
+                <i ng-click="addMode = true" class="fa fa-plus fa-lg" ng-hide="addMode"></i>
+                <label ng-cloak ng-show="addMode">
+
+                    <form name="addForm">
+                        <input bs-form-control ng-pattern="validChar" type="text" name="title" ng-model="assignment.title" label="Title" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Title" />
+                        <input bs-form-control type="text" ng-model="assignment.type" label="Type" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Type" />
+                        <input bs-form-control type="date" ng-model="assignment.due" label="Due" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Due" />
+                        <button ng-disabled="addForm.title.$invalid" class="btn btn-default" ng-click="addAssignment(); addMode = false">
+                            Save
+                        </button>
+                        <button ng-cloak ng-show="addMode" class="btn btn-default" ng-click="addMode = false">Cancel</button>
+
+
+                    </form>
+                </label>
+                <div ng-hide="addMode">
+                    <a class="list-group-item" ng-class="{active: item.title == thisAssignment}" ng-click="selectAssignment(item.title)" ng-repeat="(key,item) in assignmentList">{{item.title}}</a> 
+                </div>
+
+            </div> -->
+            <div class="col-xs-1 col-sm-1 col-lg-1">
+
+            </div>
+
+            <div bs-panel class="col-xs-9 col-sm-9 col-lg-9 ">
+                <div class="buttons">
+                    <h4 class="inline" ng-hide="deleteConfirm"><i ng-click="addMode = true" class="fa fa-plus fa-lg" ng-hide="addMode"></i></h4>
+                    <h4 class="inline" ng-hide="deleteConfirm"> <i ng-hide="addMode" ng-click="deleteConfirm = true" class="fa fa-trash-o"></i></h4>
+
+                </div>
+                <div ng-cloak ng-show="addMode" class="alert alert-success">
+
+                    <form name="addForm">
+                        <input bs-form-control ng-pattern="validChar" type="text" name="title" ng-model="assignment.title" label="Title" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Title" />
+                        <input bs-form-control type="text" ng-model="assignment.type" label="Type" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Type" />
+                        <input bs-form-control type="date" ng-model="assignment.due" label="Due" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Due" />
+                        <button ng-disabled="addForm.title.$invalid" class="btn btn-default" ng-click="addAssignment(); addMode = false">
+                            Save
+                        </button>
+                        <button ng-cloak ng-show="addMode" class="btn btn-default" ng-click="addMode = false">Cancel</button>
+
+
+                    </form>
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="deleteConfirm">
+                    <p>Are you sure you want to delete {{thisAssignment}} ?</p>
+                    <button class="btn btn-sm btn-default" ng-click="deleteConfirm = false">Cancel</button>
+                    <button class="btn btn-sm btn-danger" ng-click="deleteAssignment(thisAssignmentId); deleteConfirm = false ">Delete</button>
+
+                </div>
+
+
+                <table class="table table-striped " ng-hide="addMode">
+                    <tr>
+                        <th style="width:35%;">Name</th>
+                        <th>Instrument</th>
+                        <th colspan="2">Grade</th>
+
+                    </tr>
+                    <tr ng-repeat="value in studentList |orderByPriority | orderBy:'last'">
+
+                        <td style="vertical-align:middle;">{{value.first.charAt(0)+"."+value.last.charAt(0)+"."}}</td>
+
+                        <td style="vertical-align:middle;">{{value.instrument}}</td>
+                        <td style="width:100px;">
+                            <span style="text-align:left;" ng-hide="gradeMode">
+                            <img src="img/load.gif" width="18" height="18" ng-show="gradeLoader">
+                            <a ng-click="over(value.first, value.last, gradeVal[value.$id])" ng-hide="gradeLoader">{{gradeVal[value.$id]}}</a>
+                        </span> 
+                        </td>
+                        <td align="right">
+                            <span>
+                        <a ng-click="gradeMode = true" ng-hide="gradeMode">Grade</a>
+                        <input id="{{value.$id}}" style="width:50px; " value="{{gradeVal[value.$id]}}" class="form-control" ng-show="gradeMode" type="text" />
+                        <a ng-cloak ng-show="gradeMode" ng-click="grading(value.$id, thisAssignment); gradeMode = false">Save</a>
+                        <a ng-cloak ng-show="gradeMode" ng-click="gradeMode = false">Cancel</a>
+<!--                         <small ng-cloak ng-show="gradeMode">Retest</small> 
+                        <input name="retest" type="checkbox" value="true" ng-cloak ng-show="gradeMode" ng-model="retest"/>     -->
+<!--                         <a ng-show="gradeVal[value.$id]!= null">Show</a> -->
+                        </span>
+
+
+                        </td>
+
+
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-lg-1">
+
+            </div>
+            <!-- 
+        <div bs-panel class="col-xs-3 col-sm-3 col-lg-3" title="Other">
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="item in assignListy">
+                    <a href="#/assignments/{{groupName}}/{{item.title}}/{{assignmentType}}">{{item.title}}</a>
+                </div>
+            </div>
+        </div> -->
+        </div>
+    </div>
+
+
+</div>

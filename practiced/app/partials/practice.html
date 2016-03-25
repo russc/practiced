@@ -1,0 +1,163 @@
+<div ng-controller="StudentCtrl" >
+
+
+    <div class="btn btn-group pull-left" content-for="subMenu">
+        <button class="btn btn-navbar ng-scope" ng-show="studentMode" ng-click="resetStudentMode()">Logout</button>
+    </div>
+
+    <li content-for="roles"><a href="#/groups">Groups</a>
+    </li>
+    <!-- <div overlay="Orecordings">
+
+    <div class="scrollable dark">
+        <div class="scrollable-content">
+
+            <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55147768&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+            <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55220990&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+        </div>
+    </div>
+
+</div>- -->
+
+    <div content-for="studentName">
+        {{session.studentName.charAt(0)+"."+session.studentInst.charAt(0)+"."}}
+
+    </div>
+
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div ng-hide="studentMode" bs-panel title="Student Area Login">
+                <form id="studentLoginForm" name="studentLoginForm">
+                    <!--             <input required bs-form-control type="text" ng-model="group" label="Group Code" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10" /> -->
+                    <select id="groupSelection" name="groupSelection" bs-form-control style="width:40%;" ng-model="selectedGroup" required label="Group" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10">
+                        <!--                     <option ng-repeat="(key,val) in groupListFire" value="{{key}}">{{key}}</option> -->
+                        <option></option>
+                        <option>KMS Beginner</option>
+                        <option>KMS Beginner Percussion</option>
+                        <option>KMS Concert &amp; Symphonic</option>
+                        <option>KMS Concert &amp; Symphonic Percussion</option>
+                        <option>KMS Wind Ensemble</option>
+                        <option>KMS Wind Ensemble Percussion</option>
+
+                    </select>
+                    <input id="studentIdInput" style="width:40%;" name="studentIdInput" required bs-form-control type="password" ng-model="passw" label="Password" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-7 col-sm-8 col-lg-10" />
+                    <button ng-disabled="studentLogin.$error.required" class="btn btn-success" ng-click="setStudentMode(selectedGroup, passw)" ng-hide="studentMode">Login</button>
+
+                </form>
+            </div>
+
+            <form ng-show="studentMode" name="practiceForm">
+
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <div bs-panel title="New 30 Minute Practice Session">
+                        <h2>{{session.thisGroup}}</h2>
+                        <!--                     <a ng-show="session.thisGroup == 'KMS Wind Ensemble'" class="pull-right" ng-click="recordings(session.studentName)">Region Recordings</a> -->
+                        <input required style="width:200px;" bs-form-control name="date" type="date" max="{{max}}" ng-model="session.date" label="Date" label-class="col-xs-5 col-sm-4 col-lg-3" class="col-xs-7 col-sm-8 col-lg-9" />
+                        <!--                         <span style="width 50%; color:red;"><i>You must put the date in MM/DD/YYYY or it will not save correctly. Example: 09/09/2014</i></span> -->
+                        <input required bs-form-control type="text" placeholder="Scales, Region Music, Concert Music..." ng-model="session.practiced" label="Music Practiced" label-class="col-xs-5 col-sm-4 col-lg-3" class="col-xs-7 col-sm-8 col-lg-9" />
+
+
+                    </div>
+                    <!--             <div bs-panel title="Practice Assignments">
+                <div ng-repeat="(key,value) in user.groups">
+
+                    <h2>{{key}}</h2>
+                    <div assignments group="{{key}}"></div>
+
+                </div>
+            </div> -->
+                    <div bs-panel title="Comments">
+                        <textarea required placeholder="My practice session was...  Next time my goal is to..." type="text" ng-model="session.comments" label="Comments" bs-form-control></textarea>
+                    </div>
+
+
+                    <button ng-disabled="practiceForm.$error.required" class="btn btn-primary btn-sm" ng-click="savePractice()">
+                        Save
+                    </button>
+                    <br/>
+                    <span class="err">{{errmsg}}</span>
+
+
+
+                </div>
+            </form>
+            <div class="col-xs-6 col-sm-6 col-lg-6" ng-show="studentMode" ng-controller="WeeksCtrl" >
+                   
+                <button style="margin:40%;" class="btn btn-lg btn-success" ng-click="showLog()" ng-hide="logShow">
+                        Show Practice Log
+                    </button>
+                <div bs-panel title="Practice Log" class="week" ng-show="logShow">
+
+                    <div>
+                        <button class="btn btn-sm btn-default" ng-click="subWeek()"><i class="fa fa-arrow-left blue"></i>
+                        </button>
+                        <button class="btn btn-sm btn-default" ng-click="thisWeek()">Now</button>
+                        <button class="btn btn-sm btn-default" ng-click="addWeek()"><i class="fa fa-arrow-right blue"></i>
+                        </button>
+
+                        <div class="container" >
+                            <div class="row">
+                                <h2>{{month+" "+year}}</h2>
+
+                                <div class="weekCols">
+                                    <h3>Mon</h3>
+                                    <p>{{mon}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="monForm == item.date" class="fa fa-check green fa-3x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <h3>Tue</h3>
+                                    <p>{{tue}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="tueForm == item.date" class="fa fa-check green fa-3x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <h3>Wed</h3>
+                                    <p>{{wed}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="wedForm == item.date" class="fa fa-check green fa-3x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <h3>Thu</h3>
+                                    <p>{{thu}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="thuForm == item.date" class="fa fa-check green fa-3x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <h3>Fri</h3>
+                                    <p>{{fri}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="friForm == item.date" class="fa fa-check green fa-3x"></i>
+
+                                </div>
+                                <div class="weekCols">
+                                    <h3>Sat</h3>
+                                    <p>{{sat}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="satForm == item.date" class="fa fa-check green fa-3x"></i>
+                                </div>
+                                <div class="weekCols">
+                                    <h3>Sun</h3>
+                                    <p>{{sun}}</p>
+                                    <i ng-repeat="item in sessions" ng-show="sunForm == item.date" class="fa fa-check green fa-3x"></i>
+
+                                </div>
+
+                            </div>
+                        <h4>{{sessionCount+" sessions = "+percentage}}</h4>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</div>
+

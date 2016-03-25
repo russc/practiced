@@ -1,0 +1,25 @@
+
+<h2>Login Page</h2>
+
+<form>
+     <input bs-form-control type="text" ng-model="email" label="Email" 
+                   label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" 
+                   placeholder="Email"/>
+     <input bs-form-control type="password" ng-model="pass" label="Password" 
+                   label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" 
+                   placeholder="Password"/>
+   
+
+    <label ng-cloak ng-show="createMode" >
+          <input bs-form-control ng-cloak ng-show="createMode" type="password" ng-model="confirm" label="Confirm Pass" 
+                   label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" 
+                   placeholder="Confirm"/>
+    </label>
+    <button ng-click="login()" ng-hide="createMode" class="btn btn-success btn-sm">Log In</button>
+<!--     <button ng-click="createMode = true" class="btn-primary btn btn-sm" ng-hide="createMode">Register</button>
+    <button ng-cloak ng-show="createMode" class="btn-primary btn btn-sm"ng-click="createAccount()">Create Account</button>
+    <button ng-cloak ng-show="createMode" class="btn-danger btn btn-sm"ng-click="createMode = false">Cancel</button> -->
+
+    <p ng-show="err" class="error">{{err}}</p>
+</form>
+

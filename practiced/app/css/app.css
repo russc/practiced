@@ -1,0 +1,110 @@
+/* app css stylesheet */
+
+
+.hide {
+   display: none;
+}
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li.hide {
+   display: none;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+p.status {
+   color: red;
+}
+
+p.status.good, p.good {
+   color: green;
+}
+
+form label {
+   display: block;
+   margin: 15px 0;
+}
+
+form label span {
+   display: block;
+   font-weight: bold;
+}
+
+.error {
+   color: red;
+}
+
+fieldset {
+   float: left;
+   margin-right: 25px;
+   padding: 25px;
+}
+
+.weekCols {
+    float:left;
+    width: 14%;
+    border-left:solid 1px #aaa;
+
+    
+    padding:2px;
+}
+.weekCols h3 {
+    font-size:135%;
+}
+.monSess {
+    float:left;
+    width:90%;
+    padding:2px;
+    display:block;
+    background:cyan;
+}
+.tueSess {
+    float:left;
+    margin-left:14%;
+    width:76%;
+    padding:2px;
+    display:block;
+    background:lime;
+}
+.green{
+    color:#6f3;
+}
+.blue{
+    color:#007AFF;
+}
+.week h3{
+    color:#0D0F80;
+
+}
+.week h4{
+    color: purple;
+}
+h2 {
+    color:red;
+}

@@ -1,0 +1,223 @@
+<div ng-controller="HomeCtrl">
+
+
+    <div content-for="text">
+        Group: <em>{{"  "+group}}</em>
+    </div>
+    <div content-for="userName">
+        {{user.name}}
+
+    </div>
+    <div class="scrollable">
+
+        <div class="scrollable-content">
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+                <div bs-panel title="Groups">
+
+                    <a ng-repeat="(key,value) in groupList" class="list-group-item" ng-click="groupSelect(key)" ng-class="{active: key == group}">{{key}} </a>
+
+                </div>
+<!--                 <div bs-panel title="Listening">
+                    <dl ng-repeat="(key, value) in listened">
+                        <dt>{{key}}</dt>
+                        <dd ng-repeat="item in value">{{item.time}}</dd>
+                    </dl>
+                </div> -->
+            </div>
+            <p ng-show="group == null">Select a group on the left.</p>
+            <div class="col-xs-8 col-sm-8 col-lg-8" ng-show="group != null">
+
+
+
+                <ul class="nav nav-tabs">
+                    <!--         <li><a href="#Tab1" toggle="on" parent-active-class="active">Teachers</a>
+        </li> -->
+                    <li><a href="#Tab2" toggle="on" parent-active-class="active">Students</a>
+                    </li>
+<!--                     <li><a href="#Tab3" toggle="on" parent-active-class="active">Assignments</a>
+                    </li> -->
+                    <li><a href="#Tab4" toggle="on" parent-active-class="active">Practice</a> 
+                    </li>
+
+                    <!--     Show only to administrators somehow -->
+                    <!--         <li><a href="#Tab5" toggle="on" parent-active-class="active">Settings</a> -->
+                    <!--         </li> -->
+                </ul>
+
+
+                <div class="tab-content">
+                    <!--         <div class="tab-pane" toggleable active-class="active" default="active" id="Tab1" exclusion-group="myTabs">
+
+            <h3 class="page-header">Teachers</h3>
+
+            <p ng-repeat="(key,value) in groupSelected.users">{{value.name+" "}}<i class="fa fa-star" ng-show="value.admin"></i>
+            </p>
+        </div> -->
+                    <div class="tab-pane" toggleable active-class="active" id="Tab2" exclusion-group="myTabs">
+
+                        <h3 class="page-header">Students <i ng-click="studentAddMode = true" class="fa fa-plus" ng-hide="studentAddMode"></i></h3>
+
+                        <!--             <p ng-repeat="(key,value) in groupSelected.users">{{value.name+" "}}<i class="fa fa-star" ng-show="value.admin"></i>
+            </p> -->
+
+
+
+
+                        <table ng-hide="studentAddMode" class="table  table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First</th>
+                                    <th>Last</th>
+                                    <th>Instrument</th>
+                                    <th>{{weekSelect}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in groupStudents | orderByPriority | orderBy:'last' ">
+                                    <td>{{item.$id}}</td>
+                                    <td>{{item.first}}</td>
+                                    <td>{{item.last}}</td>
+                                    <td>{{item.instrument}}</td>
+                                    <td practicetime student="{{item.$id}}" group="{{group}}" week="{{weekSelect}}"></td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        <label ng-cloak ng-show="studentAddMode">
+                            <form>
+
+
+                                <input bs-form-control type="text" ng-model="student.id" label="ID" label-class="col-xs-5 col-sm-4 col-lg-3" class="col-xs-7 col-sm-8 col-lg-9" placeholder="ID" />
+                                <input bs-form-control type="text" ng-model="student.first" label="First Name" label-class="col-xs-5 col-sm-4 col-lg-3" class="col-xs-7 col-sm-8 col-lg-9" placeholder="First Name" />
+                                <input bs-form-control type="text" ng-model="student.last" label="Last Name" label-class="col-xs-5 col-sm-4 col-lg-3" class="col-xs-7 col-sm-8 col-lg-9" placeholder="Last Name" />
+                                <input bs-form-control type="text" ng-model="student.instrument" label="Instrument" label-class="col-xs-5 col-sm-4 col-lg-3" class="col-xs-7 col-sm-8 col-lg-9" placeholder="Instrument" />
+                                <button class="btn btn-default" ng-click="addStudent()">
+                                    Save
+                                </button>
+                                <button ng-cloak ng-show="studentAddMode" class="btn btn-default" ng-click="studentAddMode = false">Cancel</button>
+                            </form>
+                        </label>
+
+
+                    </div>
+
+<!--                     <div class="tab-pane" toggleable active-class="active" id="Tab3" exclusion-group="myTabs">
+                        <h3 class="page-header">Assignments <i ng-click="addMode = true" class="fa fa-plus" ng-hide="addMode"></i></h3>
+
+                        <table ng-hide="addMode" class="table table-striped">
+
+                            <tr>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Due</th> -->
+                                <!--                             <th>Show Student</th> -->
+<!--                             </tr>
+                            <tr ng-repeat="(key,item) in assigns | orderBy: 'due'" ng-hide="item.due < '2014-10-10'">
+                                <td><a href="#/assignments/{{group}}/{{item.title}}/{{item.type}}">{{item.title}}</a>
+                                </td>
+                                <td>{{item.type}}</td>
+                                <td dateformat date="{{item.due}}"></td> -->
+                                <!--                             <td><input type="checkbox" ng-checked="item.show" ng-click="change(key, group)" /></td> -->
+<!--                             </tr>
+                        </table>
+
+                        <label ng-cloak ng-show="addMode">
+                            <form name="addForm">
+                                <input bs-form-control ng-pattern="validChar" type="text" name="title" ng-model="assignment.title" label="Title" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Title" />
+                                <input bs-form-control type="text" ng-model="assignment.type" label="Type" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Type" />
+                                <input bs-form-control type="date" ng-model="assignment.due" label="Due" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Due" />
+                                <button ng-disabled="addForm.title.$invalid" class="btn btn-default" ng-click="addAssignment(group)">
+                                    Save
+                                </button>
+                                <button ng-cloak ng-show="addMode" class="btn btn-default" ng-click="addMode = false">Cancel</button>
+
+
+                            </form>
+                        </label>
+
+
+                    </div> -->
+                    <div class="tab-pane" toggleable active-class="active" id="Tab4" exclusion-group="myTabs">
+                        <h3 class="page-header">Practice </h3>
+
+                        <div class="panel-group" id="accordion">
+
+                            <div ng-repeat="(key, value) in practiceRecords" class="panel panel-default">
+                                <div class="panel-heading" toggle target="{{key}}">
+                                    <h4 class="panel-title">{{key}}</h4>
+                                </div>
+
+                                <div id="{{key}}" toggleable active-class="in" exclusion-group="accordion1" default="inactive" class="panel-collapse collapse">
+                                    <div class="panel-body">
+
+                                        <a href="#/sessions/{{group}}/{{key}}">Comments</a>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>First</th>
+                                                    <th>Last</th>
+                                                    <th>Instrument</th>
+                                                    <th>{{key}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in groupStudents | orderByPriority | orderBy:'last' ">
+                                                    <td>{{item.$id}}</td>
+                                                    <td>{{item.first}}</td>
+                                                    <td>{{item.last}}</td>
+                                                    <td>{{item.instrument}}</td>
+                                                    <td practicetime student="{{item.$id}}" group="{{group}}" week="{{key}}"></td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!--         <div class="tab-pane" toggleable active-class="active" id="Tab4" exclusion-group="myTabs">
+            <h3 class="page-header">Practice</h3>
+             <select ng-model="cat" class="form-control">
+                        <option  value="last" selected="selected">Last Name</option>
+                        <option value="instrument">Instrument</option>
+                    </select>
+                    <table class="table  table-striped">
+                        <thead>
+                            <tr>
+                                <th>Week</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(key, value) in practiceRecords | orderByPriority | orderBy:cat">
+
+                                <td>{{key}}</td>
+                                
+                            </tr>
+                            
+                        </tbody>
+
+                    </table>
+
+        </div> -->
+                <!--         <div class="tab-pane" toggleable active-class="active" id="Tab5" exclusion-group="myTabs">
+            <h3 class="page-header">Settings</h3>
+            <p>
+                
+            </p>
+        </div> -->
+            </div>
+        </div>
+    </div>
+

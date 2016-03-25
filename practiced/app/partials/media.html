@@ -1,0 +1,21 @@
+<div class="scrollable">
+
+    <div class="scrollable-content">
+
+        <div bs-panel title="Links">
+            <dl ng-repeat="(key, value) in media">
+                <dt>{{key}}</dt>
+                <dd ng-repeat="item in value">
+                    <a target="_blank" href="{{item.media}}">{{item.date+":  "+item.media}}</a> 
+
+
+<!--                     <button  class="btn btn-danger btn-xs" ng-click="deleteMedia(key)">
+                        Delete
+                    </button> -->
+
+
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

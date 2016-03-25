@@ -1,0 +1,60 @@
+<!-- 
+<div class="scrollable dark">
+    <div class="scrollable-content">
+
+                    <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55147768&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+         <iframe width="30%" height="80%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/55220990&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=false"></iframe>
+    </div>
+</div> -->
+<div ng-controller="WeeksCtrl">
+    <button ng-click="addWeek()">Add</button>
+    <button ng-click="subWeek()">Sub</button>
+    <button ng-click="thisWeek()">This Week</button>
+    <div class="container">
+        <div class="row">
+            <h2>{{month+" "+year}}</h2>
+
+            <div class="weekCols">
+                <h3>Mon</h3>
+                <p>{{mon}}</p>
+                <i ng-repeat="item in sessions" ng-show="monForm == item.date" class="fa fa-check green fa-3x"></i>
+
+            </div>
+            <div class="weekCols">
+                <h3>Tue</h3>
+                <p>{{tue}}</p>
+                <i ng-repeat="item in sessions" ng-show="tueForm == item.date" class="fa fa-check green fa-3x"></i>
+
+            </div>
+            <div class="weekCols">
+                <h3>Wed</h3>
+                <p>{{wed}}</p>
+                <i ng-repeat="item in sessions" ng-show="wedForm == item.date" class="fa fa-check green fa-3x"></i>
+
+            </div>
+            <div class="weekCols">
+                <h3>Thu</h3>
+                <p>{{thu}}</p>
+                <i ng-repeat="item in sessions" ng-show="thuForm == item.date" class="fa fa-check green fa-3x"></i>
+
+            </div>
+            <div class="weekCols">
+                <h3>Fri</h3>
+                <p>{{fri}}</p>
+                <i ng-repeat="item in sessions" ng-show="friForm == item.date" class="fa fa-check green fa-3x"></i>
+
+            </div>
+            <div class="weekCols">
+                <h3>Sat</h3>
+                <p>{{sat}}</p>
+                <i ng-repeat="item in sessions" ng-show="satForm == item.date" class="fa fa-check green fa-3x"></i>
+            </div>
+            <div class="weekCols">
+                <h3>Sun</h3>
+                <p>{{sun}}</p>
+                <i ng-repeat="item in sessions" ng-show="sunForm == item.date" class="fa fa-check green fa-3x"></i>
+
+            </div>
+        </div>
+    </div>
+
